@@ -1,8 +1,8 @@
 -- @Autor: Kennedy Villa Carolina
---         Cesar Mauricio Ramos Villaseñor
+--         Ramos Villaseñor Cesar Mauricio
 -- @Fecha: 02/02/2021 
 -- @DescripciÓn: Creación de la base de datos
--- para Virtual Gym
+-- para Virtual Gym, junto con su diccionario de datos
 
 connect sys/systemgym as sysdba
 startup nomount
@@ -33,7 +33,7 @@ create database keraproy
     size 700m reuse autoextend on next 10240k maxsize unlimited
   sysaux datafile '/u14/app/oracle/oradata/KERAPROY/sysaux01.dbf'
     size 550m reuse autoextend on next 10240k maxsize unlimited
-  default temporary tablespace tempts1
+  default temporary tablespace temptbs1
     tempfile '/u14/app/oracle/oradata/KERAPROY/temp01.dbf'
     size 20m reuse autoextend on next 640k maxsize unlimited
   undo tablespace undotbs1
@@ -42,5 +42,12 @@ create database keraproy
 
 alter user sys identified by systemgym;
 alter user system identified by systemgym;
+
+@?/rdbms/admin/catalog.sql
+@?/rdbms/admin/catproc.sql
+@?/rdbms/admin/utlrp.sql
+
+connect system/systemgym
+@?/sqlplus/admin/pupbld.sql
 
 whenever sqlerror continue none;
