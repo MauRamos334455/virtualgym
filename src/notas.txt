@@ -1,0 +1,4 @@
+- Las contraseñas de SYS y SYSBACKUP deben de ser hola1234* 
+- Antes de ejecutar el s-03, deberás de exportar ORACLE_SID=keraproy
+y entrar a sqlplus como sys e iniciar en nomount
+- Antes de crear la base, hay que crear el spfile del pfile...

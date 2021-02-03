@@ -4,8 +4,8 @@
 -- @DescripciÓn: Creación de la base de datos
 -- para Virtual Gym, junto con su diccionario de datos
 
-connect sys/systemgym as sysdba
-startup nomount
+--connect sys/systemgym as sysdba
+--startup nomount
 whenever sqlerror exit rollback
 create database keraproy
   user sys identified by systemgym

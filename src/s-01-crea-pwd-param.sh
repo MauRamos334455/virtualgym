@@ -26,6 +26,6 @@ echo -e "db_name=keraproy\n
 control_files=(/u11/app/oracle/oradata/KERAPROY/control01.ctl,
 /u12/app/oracle/oradata/KERAPROY/control02.ctl,
 /u13/app/oracle/oradata/KERAPROY/control03.ctl)\n
-memory_target=768MB" >> $ORACLE_HOME/dbs/initkeraproy.ora
+memory_target=768M" >> $ORACLE_HOME/dbs/initkeraproy.ora
 
 echo "---------- Listo! ----------"
