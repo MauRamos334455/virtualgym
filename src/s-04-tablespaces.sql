@@ -1,8 +1,8 @@
 -- @Autor: Kennedy Villa Carolina
 --         Ramos Villaseñor Cesar Mauricio
 -- @Fecha: 02/02/2021 
--- @Descripción: Creación de la base de datos
--- para Virtual Gym
+-- @Descripción: Creación de los tablespaces
+-- que se utilizarán en la BD. 
 
 connect sys/systemgym as sysdba
 

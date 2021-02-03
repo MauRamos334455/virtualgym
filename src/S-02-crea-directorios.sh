@@ -1,7 +1,7 @@
 # @Autor: Kennedy Villa Carolina
 #         Ramos Villaseñor Cesar Mauricio
 # @Fecha: 02/02/2021 
-# @DescripciÓn: Creación de los directorios necesarios
+# @Descripción: Creación de los directorios necesarios
 # para la correcta operación de la base de datos
 
 echo "---------- Creando carpetas de discos u11, u12, u13"
