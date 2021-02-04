@@ -4,8 +4,8 @@
 -- @DescripciÓn: Creación de la base de datos
 -- para Virtual Gym, junto con su diccionario de datos
 
---connect sys/systemgym as sysdba
---startup nomount
+connect sys/hola1234% as sysdba
+startup nomount
 whenever sqlerror exit rollback
 create database keraproy
   user sys identified by systemgym
@@ -43,11 +43,10 @@ create database keraproy
 alter user sys identified by systemgym;
 alter user system identified by systemgym;
 
+whenever sqlerror continue none;
+
+connect system/systemgym
 @?/rdbms/admin/catalog.sql
 @?/rdbms/admin/catproc.sql
 @?/rdbms/admin/utlrp.sql
-
-connect system/systemgym
 @?/sqlplus/admin/pupbld.sql
-
-whenever sqlerror continue none;
