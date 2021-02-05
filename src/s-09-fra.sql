@@ -1,0 +1,5 @@
+-- @Autor: Kennedy Villa Carolina
+--         Ramos Villaseñor Cesar Mauricio
+-- @Fecha: 05/02/2021
+-- @DescripciÓn: Configuraciones para la
+-- FRA en la base de datos
