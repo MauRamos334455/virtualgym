@@ -25,9 +25,9 @@ create user user_gym identified by kera
 
 
 prompt Otorgando privilegios...
-grant create table, create session, create any index, create procedure
+grant create table, create session, create any index, create procedure, references
  to admin_gym;
-grant create table, create session, create any index, create procedure
+grant create table, create session, create any index, create procedure, references
  to user_gym;
 
 prompt ****¡TERMINADO!****
