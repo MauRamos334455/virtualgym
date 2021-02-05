@@ -1,5 +1,5 @@
--- @Autor: Kennedy villa carolina
---         Ramos villaseñor cesar mauricio
+-- @Autor: Kennedy Villa Carolina
+--         Ramos Villaseñor Cesar Mauricio
 -- @Fecha: 02/02/2021 
 -- @Descripción: Creación de los objetos
 -- para la base de datos (tablas, índices, constraints)
