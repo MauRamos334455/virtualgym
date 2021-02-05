@@ -57,7 +57,7 @@ create table empleado(
         create unique index emp_rfc_iux on empleado(rfc)
         tablespace info_gym_idx
     ),
-    constraint emp_tipo_chk check(empleado = 'A' or empleado = 'I')
+    constraint emp_tipo_chk check(tipo in ('A', 'I'))
 ) tablespace info_gym
 lob (foto) store as securefile (tablespace blobtbs1)
 lob (huella_izq_pulgar) store as securefile (tablespace blobtbs1)
@@ -76,7 +76,7 @@ lob (huella_der_medio) store as securefile (tablespace blobtbs1);
 --
 create table administrativo(
     empleado_id    number(10, 0)    not null,
-    user           varchar2(30)     not null,
+    username           varchar2(30)     not null,
     password       varchar2(30)     not null,
     rol            varchar2(40)     not null,
     certificado    blob             not null,
@@ -101,7 +101,7 @@ create table disciplina(
     icono            blob             not null,
     constraint disciplina_pk primary key (disciplina_id)
     using index (
-        create unique index dis_pk_ix on disciplina(disciplina_id)
+        create unique index disc_pk_ix on disciplina(disciplina_id)
         tablespace info_gym_idx
     ),
     constraint disc_clave_uk unique(clave)
@@ -148,7 +148,7 @@ create table status_disp(
     descripcion    varchar2(100)    not null,
     constraint status_disp_pk primary key (status_id)
     using index (
-        create unique index sd_pk_ix on status_disp(status_id)
+        create unique index sdisp_pk_ix on status_disp(status_id)
         tablespace info_gym_idx
     )
 ) tablespace info_gym;
@@ -165,9 +165,9 @@ create table dispositivo(
     fecha_status        date             not null,
     status_actual_id    number(10, 0)    not null,
     gimnasio_id         number(10, 0)    not null,
-    constraint dispositivo_pk primary key (inventario_id)
+    constraint dispositivo_pk primary key (dispositivo_id)
     using index (
-        create unique index dis_pk_ix on dispositivo(dispositivo_id)
+        create unique index disp_pk_ix on dispositivo(dispositivo_id)
         tablespace info_gym_idx
     ),
     constraint dis_gimnasio_id_fk foreign key (gimnasio_id)
@@ -185,10 +185,10 @@ create table dispositivo(
 -- table: gimnasio_empleado 
 --
 create table gimnasio_empleado(
-    gimansio_empleado_id    number(10, 0)    not null,
+    gimnasio_empleado_id    number(10, 0)    not null,
     empleado_id             number(10, 0)    not null,
     gimnasio_id             number(10, 0)    not null,
-    constraint gimnasio_empleado_pk primary key (gimansio_empleado_id)
+    constraint gimnasio_empleado_pk primary key (gimnasio_empleado_id)
     using index (
         create unique index ge_pk_ix on gimnasio_empleado(gimnasio_empleado_id)
         tablespace info_gym_idx
@@ -233,7 +233,7 @@ create table historico_status_disp(
         tablespace info_gym_idx
     ), 
     constraint hsd_inventario_id_fk foreign key (inventario_id)
-    references dispositivo(inventario_id),
+    references dispositivo(dispositivo_id),
     constraint hsd_status_id_fk foreign key (status_id)
     references status_disp(status_id)
 ) tablespace info_gym
@@ -293,12 +293,12 @@ create table sala_disciplina(
     disciplina_id         number(10, 0)    not null,
     constraint sala_disciplina_pk primary key (sala_disciplina_id)
     using index (
-        create unique index sd_pk_ix on sala_disciplina(sala_disciplina_id)
+        create unique index sdis_pk_ix on sala_disciplina(sala_disciplina_id)
         tablespace info_gym_idx
     ), 
-    constraint sd_sala_id_fk foreign key (sala_id)
+    constraint sdis_sala_id_fk foreign key (sala_id)
     references sala(sala_id),
-    constraint sd_disciplina_id_fk foreign key (disciplina_id)
+    constraint sdis_disciplina_id_fk foreign key (disciplina_id)
     references disciplina(disciplina_id)
 ) tablespace info_gym;
 
@@ -330,14 +330,14 @@ tablespace info_gym_idx;
 create index gim_longitud_ix on gimnasio(longitud)
 tablespace info_gym_idx;
 
-create unique index adm_user_iux on administrativo(user)
+create unique index adm_user_iux on administrativo(username)
 tablespace info_gym_idx;
 
 create unique index adm_password_iux on administrativo(password)
 tablespace info_gym_idx;
 
 -----------------------FK-------------------------------------
-create unique index gim_gerente_fk_ix on gimnasio(gererente_id)
+create unique index gim_gerente_fk_ix on gimnasio(gerente_id)
 tablespace info_gym_idx;
 
 create index gmm_gimnasio_fk_ix on gym_material_multimedia(gimnasio_id)
@@ -349,7 +349,7 @@ tablespace info_gym_idx;
 create index ge_gimnasio_fk_ix on gimnasio_empleado(gimnasio_id)
 tablespace info_gym_idx;
 
-create index sal_empleado_fk_ix on sala(empleado_id)
+create index sal_empleado_sala_fk_ix on sala(empleado_sala_id)
 tablespace info_gym_idx;
 
 create index ui_empleado_fk_ix on url_instructor(empleado_id)
@@ -373,48 +373,48 @@ tablespace info_gym_idx;
 create index hsd_inventario_fk_ix on historico_status_disp(inventario_id)
 tablespace info_gym_idx;
 
------------------------BLOB-------------------------------------
-create index emp_foto_iux on empleado(foto)
-tablespace info_gym_idx;
+-- -----------------------BLOB-------------------------------------
+-- create index emp_foto_iux on empleado(foto)
+-- tablespace info_gym_idx;
 
-create unique index emp_hip_iux on empleado(huella_izq_pulgar)
-tablespace info_gym_idx;
+-- create unique index emp_hip_iux on empleado(huella_izq_pulgar)
+-- tablespace info_gym_idx;
 
-create unique index emp_hii_iux on empleado(huella_izq_indice)
-tablespace info_gym_idx;
+-- create unique index emp_hii_iux on empleado(huella_izq_indice)
+-- tablespace info_gym_idx;
 
-create unique index emp_himenique_iux on empleado(huella_izq_menique)
-tablespace info_gym_idx;
+-- create unique index emp_himenique_iux on empleado(huella_izq_menique)
+-- tablespace info_gym_idx;
 
-create unique index emp_hia_iux on empleado(huella_izq_anular)
-tablespace info_gym_idx;
+-- create unique index emp_hia_iux on empleado(huella_izq_anular)
+-- tablespace info_gym_idx;
 
-create unique index emp_himedio_iux on empleado(huella_izq_medio)
-tablespace info_gym_idx;
+-- create unique index emp_himedio_iux on empleado(huella_izq_medio)
+-- tablespace info_gym_idx;
 
-create unique index emp_hdp_iux on empleado(huella_der_pulgar)
-tablespace info_gym_idx;
+-- create unique index emp_hdp_iux on empleado(huella_der_pulgar)
+-- tablespace info_gym_idx;
 
-create unique index emp_hdi_iux on empleado(huella_der_indice)
-tablespace info_gym_idx;
+-- create unique index emp_hdi_iux on empleado(huella_der_indice)
+-- tablespace info_gym_idx;
 
-create unique index emp_hdmenique_iux on empleado(huella_der_menique)
-tablespace info_gym_idx;
+-- create unique index emp_hdmenique_iux on empleado(huella_der_menique)
+-- tablespace info_gym_idx;
 
-create unique index emp_hda_iux on empleado(huella_der_anular)
-tablespace info_gym_idx;
+-- create unique index emp_hda_iux on empleado(huella_der_anular)
+-- tablespace info_gym_idx;
 
-create unique index emp_hdmedio_iux on empleado(huella_der_medio)
-tablespace info_gym_idx;
+-- create unique index emp_hdmedio_iux on empleado(huella_der_medio)
+-- tablespace info_gym_idx;
 
-create unique index gmm_contenido_iux on contenido(gym_material_multimedia)
-tablespace info_gym_idx;
+-- create unique index gmm_contenido_iux on contenido(gym_material_multimedia)
+-- tablespace info_gym_idx;
 
-create unique index adm_certificado_iux on administrativo(certificado)
-tablespace info_gym_idx;
+-- create unique index adm_certificado_iux on administrativo(certificado)
+-- tablespace info_gym_idx;
 
-create unique index dis_icono_iux on disciplina(icono)
-tablespace info_gym_idx;
+-- create unique index dis_icono_iux on disciplina(icono)
+-- tablespace info_gym_idx;
 
 whenever sqlerror continue none
 
@@ -466,7 +466,6 @@ lob (foto) store as securefile (tablespace blobtbs1);
 -- 
 -- table: sesion 
 --
-grant references 
 create table sesion(
     sesion_id         number(10, 0)    not null,
     tipo              varchar2(15)     not null,
@@ -476,8 +475,8 @@ create table sesion(
     total_calorias    number(14, 4)    not null,
     cliente_id        number(10, 0)    not null,
     empleado_id       number(10,0)     not null,
-    sala_id           number(10,0)     not null
-    constraint sesion_pk primary key (sesion_id)
+    sala_id           number(10,0)     not null,
+    constraint sesion_pk primary key(sesion_id)
     using index (
         create unique index ses_pk_ix on sesion(sesion_id)
         tablespace users_idx
@@ -527,7 +526,7 @@ create table credencial(
     using index (
         create unique index cre_codigo_barras_iux on credencial(codigo_barras)
         tablespace users_idx
-    )
+    ),
     constraint cre_cliente_id_fk foreign key (cliente_id)
     references cliente(cliente_id)
 ) tablespace users;
@@ -565,7 +564,7 @@ create table sensor(
         create unique index sen_pk_ix on sensor(sensor_id)
         tablespace users_idx
     ),
-    constraint sen_num_serie_uk unique(folio)
+    constraint sen_num_serie_uk unique(num_serie)
     using index (
         create unique index sen_num_serie_iux on sensor(num_serie)
         tablespace users_idx
@@ -579,16 +578,13 @@ prompt ====== creando índices en users_ix ======
 create index cli_direccion_ix on cliente(direccion)
 tablespace users_idx;
 
-create unique index cre_codigo_barras_iux on credencial(codigo_barras)
+create index ses_fecha_dia_ix on sesion(extract(day from fecha_inicio))
 tablespace users_idx;
 
-create index ses_fecha_dia_ix on sesion(fecha_inicio)
+create index ses_fecha_mes_ix on sesion(extract(month from fecha_inicio))
 tablespace users_idx;
 
-create index ses_fecha_mes_ix on sesion(fecha_inicio)
-tablespace users_idx;
-
-create index ses_fecha_ano_ix on sesion(fecha_inicio)
+create index ses_fecha_ano_ix on sesion(extract(year from fecha_inicio))
 tablespace users_idx;
 
 create index ses_duracion_ix on sesion(duracion)
@@ -624,15 +620,16 @@ tablespace info_gym_idx;
 create index cal_sesion_fk_ix on caloria(sesion_id)
 tablespace info_gym_idx;
 ------------------BLOB-------------------------------
-create unique index cli_foto_iux on users_gym.cliente(foto)
-tablespace users_gym_idx;
+-- create unique index cli_foto_iux on users_gym.cliente(foto)
+-- tablespace users_gym_idx;
 whenever sqlerror continue none;
 
 connect sys/systemgym as sysdba
 whenever sqlerror exit rollback
 
 prompt ======== Union de modulos ======
-grant references on user_gym.sesion to admin_gym;
+grant references on admin_gym.instructor to user_gym;
+grant references on admin_gym.sala to user_gym;
 
 alter table user_gym.sesion add constraint empleado_id_fk 
 foreign key (empleado_id) 
