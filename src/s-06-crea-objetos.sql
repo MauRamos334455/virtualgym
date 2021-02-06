@@ -19,7 +19,7 @@ create table empleado(
     num_trabajador        number(38, 0)    not null,
     rfc                   varchar2(20)     not null,
     fecha_nacimiento      date             not null,
-    email                 varchar2(30)     not null,
+    email                 varchar2(50)     not null,
     foto                  blob             not null,
     huella_izq_pulgar     blob,
     huella_izq_indice     blob,
