@@ -246,7 +246,7 @@ create table instructor(
     empleado_id    number(10, 0)    not null,
     cedula         varchar2(40)     not null,
     años_exp       number(10, 0)    not null,
-    suplente_id    varchar2(40)     not null,
+    suplente_id    number(10, 0)     not null,
     constraint instructor_pk primary key (empleado_id)
     using index (
         create unique index ins_pk_ix on instructor(empleado_id)
