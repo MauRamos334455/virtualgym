@@ -48,11 +48,7 @@ mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b
 chown -R oracle:oinstall /unam-bda/archivelogs
 chmod -R 750 /unam-bda/archivelogs
 
-## Esquema de respaldos
-
-## Complete Media Recovery
-
-##Habilitar FRA
+## Habilitar FRA
 - Nos conectamos a la BD target
 connect target "sys@keraproy as sysdba"
 
@@ -79,7 +75,9 @@ backup as backupset incremental level 0 database plus archivelog tag autos_backu
 
 backup as backupset incremental level 1 cumulative database plus archivelog tag autos_backup_nivel_1_1;
 
+## Esquema de respaldos
 
+## Complete Media Recovery
 
 
 
