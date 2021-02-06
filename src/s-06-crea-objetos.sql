@@ -332,7 +332,7 @@ tablespace info_gym_idx;
 create index gim_longitud_ix on gimnasio(longitud)
 tablespace info_gym_idx;
 
-create unique index adm_user_iux on administrativo(username)
+create unique index adm_username_iux on administrativo(username)
 tablespace info_gym_idx;
 
 create unique index adm_password_iux on administrativo(password)
@@ -345,22 +345,25 @@ tablespace info_gym_idx;
 create index gmm_gimnasio_fk_ix on gym_material_multimedia(gimnasio_id)
 tablespace info_gym_idx;
 
+create index ins_suplente_fk_ix on instructor(suplente_id)
+tablespace info_gym_idx;
+
 create index ge_empleado_fk_ix on gimnasio_empleado(empleado_id)
 tablespace info_gym_idx;
 
 create index ge_gimnasio_fk_ix on gimnasio_empleado(gimnasio_id)
 tablespace info_gym_idx;
 
-create index sal_empleado_sala_fk_ix on sala(empleado_id)
+create index sal_empleado_fk_ix on sala(empleado_id)
 tablespace info_gym_idx;
 
 create index ui_empleado_fk_ix on url_instructor(empleado_id)
 tablespace info_gym_idx;
 
-create index sd_sala_fk_ix on sala_disciplina(sala_id)
+create index sdis_sala_fk_ix on sala_disciplina(sala_id)
 tablespace info_gym_idx;
 
-create index sd_disciplina_fk_ix on sala_disciplina(disciplina_id)
+create index sdis_disciplina_fk_ix on sala_disciplina(disciplina_id)
 tablespace info_gym_idx;
 
 create index disp_status_fk_ix on dispositivo(status_actual_id)
@@ -372,7 +375,7 @@ tablespace info_gym_idx;
 create index hsd_status_fk_ix on historico_status_disp(status_id)
 tablespace info_gym_idx;
 
-create index hsd_inventario_fk_ix on historico_status_disp(dispositivo_id)
+create index hsd_dispositivo_fk_ix on historico_status_disp(dispositivo_id)
 tablespace info_gym_idx;
 
 -- -----------------------BLOB-------------------------------------

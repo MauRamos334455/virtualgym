@@ -19,9 +19,9 @@ create database keraproy
     '/u12/app/oracle/oradata/KERAPROY/redo02b.log',
     '/u13/app/oracle/oradata/KERAPROY/redo02c.log') size 150m blocksize 512,
   group 3 (
-    '/u11/app/oracle/oradata/KERAPROY/redo03a.log',
-    '/u12/app/oracle/oradata/KERAPROY/redo03b.log',
-    '/u13/app/oracle/oradata/KERAPROY/redo03c.log') size 150m blocksize 512
+    '/unam-bda/fast-reco-area/redo03a.log',
+    '/unam-bda/fast-reco-area/redo03b.log',
+    '/unam-bda/fast-reco-area/redo03c.log') size 150m blocksize 512
   maxloghistory 2
   maxlogfiles 16
   maxlogmembers 3
