@@ -484,7 +484,8 @@ create table sesion(
         tablespace users_idx
     ), 
     constraint ses_cliente_id_fk foreign key (cliente_id)
-    references cliente(cliente_id)
+    references cliente(cliente_id),
+    constraint ses_tipo_chk check(tipo in ('prescencial', 'online'))
 ) tablespace users;
 
 -- 
