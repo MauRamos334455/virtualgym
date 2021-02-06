@@ -9,18 +9,21 @@ mkdir -p /u11/app/oracle/oradata/KERAPROY
 mkdir -p /u12/app/oracle/oradata/KERAPROY
 mkdir -p /u13/app/oracle/oradata/KERAPROY
 mkdir -p /u14/app/oracle/oradata/KERAPROY
+mkdir -p /unam-bda/fast-reco-area
 
 echo "---------- Cambiando dueño"
 chown oracle:oinstall /u11/* -R
 chown oracle:oinstall /u12/* -R
 chown oracle:oinstall /u13/* -R
 chown oracle:oinstall /u14/* -R
+chown oracle:oinstall /unam-bda/fast-reco-area/ -R
 
 echo "--------- Cambiando permisos"
 chmod 754 /u11/* -R
 chmod 754 /u12/* -R
 chmod 754 /u13/* -R
 chmod 754 /u14/* -R
+chmod 754 /unam-bda/fast-reco-area/ -R
 
 echo "-------- Terminado"
 exit 0

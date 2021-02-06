@@ -1,5 +1,0 @@
-drop table admin_gym.empleado;
-drop table admin_gym.administrativo;
-drop table admin_gym.disciplina;
-drop table admin_gym.gimnasio;
-drop table admin_gym.status_disp;
