@@ -246,7 +246,7 @@ create table instructor(
     empleado_id    number(10, 0)    not null,
     cedula         varchar2(40)     not null,
     años_exp       number(10, 0)    not null,
-    suplente_id    number(10, 0)     not null,
+    suplente_id    number(10, 0)    null,
     constraint instructor_pk primary key (empleado_id)
     using index (
         create unique index ins_pk_ix on instructor(empleado_id)
@@ -271,13 +271,13 @@ create table sala(
     clave               varchar2(3)      not null,
     nombre              varchar2(40)     not null,
     capacidad           number(10, 0)    not null,
-    empleado_sala_id    number(10, 0)    not null,
+    empleado_id    number(10, 0)    not null,
     constraint sala_pk primary key (sala_id)
     using index (
         create unique index sal_pk_ix on sala(sala_id)
         tablespace info_gym_idx
     ), 
-    constraint sal_empleado_sala_id_fk foreign key (empleado_sala_id)
+    constraint sal_empleado_sala_id_fk foreign key (empleado_id)
     references administrativo(empleado_id),
     constraint sal_clave_uk unique(clave)
     using index (
@@ -351,7 +351,7 @@ tablespace info_gym_idx;
 create index ge_gimnasio_fk_ix on gimnasio_empleado(gimnasio_id)
 tablespace info_gym_idx;
 
-create index sal_empleado_sala_fk_ix on sala(empleado_sala_id)
+create index sal_empleado_sala_fk_ix on sala(empleado_id)
 tablespace info_gym_idx;
 
 create index ui_empleado_fk_ix on url_instructor(empleado_id)
@@ -430,7 +430,7 @@ create table cliente(
     nombre              varchar2(50)     not null,
     ap_paterno          varchar2(40)     not null,
     ap_materno          varchar2(40),
-    email               varchar2(30)     not null,
+    email               varchar2(50)     not null,
     username            varchar2(30)     not null,
     password            varchar2(40)     not null,
     direccion           varchar2(200)    not null,
@@ -485,7 +485,7 @@ create table sesion(
     ), 
     constraint ses_cliente_id_fk foreign key (cliente_id)
     references cliente(cliente_id),
-    constraint ses_tipo_chk check(tipo in ('prescencial', 'online'))
+    constraint ses_tipo_chk check(tipo in ('presencial', 'online'))
 ) tablespace users;
 
 -- 
@@ -603,25 +603,25 @@ create index cal_tiempo_ix on caloria(tiempo)
 tablespace users_idx;
 -------------------FK---------------------------
 create index cre_cliente_fk_ix on credencial(cliente_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index ses_empleado_fk_ix on sesion(empleado_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index ses_sala_fk_ix on sesion(sala_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index ses_cliente_fk_ix on sesion(cliente_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index ec_cliente_fk_ix on expediente_cliente(cliente_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index sen_cliente_fk_ix on sensor(cliente_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 
 create index cal_sesion_fk_ix on caloria(sesion_id)
-tablespace info_gym_idx;
+tablespace users_idx;
 ------------------BLOB-------------------------------
 -- create unique index cli_foto_iux on users_gym.cliente(foto)
 -- tablespace users_gym_idx;
@@ -639,7 +639,7 @@ foreign key (empleado_id)
 references admin_gym.instructor(empleado_id);
 
 alter table user_gym.sesion add constraint sesion_id_fk 
-foreign key (sesion_id) 
+foreign key (sala_id) 
 references admin_gym.sala(sala_id);
 
 prompt ====== LISTO ======
