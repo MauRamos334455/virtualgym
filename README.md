@@ -51,3 +51,36 @@ chmod -R 750 /unam-bda/archivelogs
 ## Esquema de respaldos
 
 ## Complete Media Recovery
+
+##Habilitar FRA
+- Nos conectamos a la BD target
+connect target "sys@keraproy as sysdba"
+
+- Configuramos la ruta del backup
+configure channel device type disk format '/unam-bda/backups/backup_%U.bkp' maxpiecesize 5G;
+
+configure controlfile autobackup format for device type disk to '/unam-bda/backups/ctl_file%F.bkp';
+
+- Hacer Full Backup
+
+backup database plus archivelog tag autos_full_inicial;
+
+- Eliminar archivos obsoletos
+
+report obsolete;
+delete obsolete;
+
+- Simular carga diaria (sólo se estima)
+
+- Realizar backup nivel 0
+backup as backupset incremental level 0 database plus archivelog tag autos_backup_nivel_0_1; 
+
+- Realizar backup incremental diferencial
+
+backup as backupset incremental level 1 cumulative database plus archivelog tag autos_backup_nivel_1_1;
+
+
+
+
+
+
