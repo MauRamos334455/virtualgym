@@ -215,7 +215,8 @@ create table gym_material_multimedia(
         tablespace info_gym_idx
     ),
     constraint gmm_gimnasio_id_fk foreign key (gimnasio_id)
-    references gimnasio(gimnasio_id)
+    references gimnasio(gimnasio_id),
+    constraint gmm_tipo_chk check (tipo in ('V', 'I'))
 ) tablespace info_gym
 lob (contenido) store as securefile (tablespace blobtbs1);
 
@@ -226,18 +227,17 @@ create table historico_status_disp(
     historico_status_disp_id     number(10, 0)    not null,
     fecha_status     date             not null,
     status_id        number(10, 0)    not null,
-    inventario_id    number(10, 0)    not null,
+    dispositivo_id    number(10, 0)    not null,
     constraint historico_status_disp_pk primary key (historico_status_disp_id)
     using index (
         create unique index hsd_pk_ix on historico_status_disp(historico_status_disp_id)
         tablespace info_gym_idx
     ), 
-    constraint hsd_inventario_id_fk foreign key (inventario_id)
+    constraint hsd_dispositivo_id_fk foreign key (dispositivo_id)
     references dispositivo(dispositivo_id),
     constraint hsd_status_id_fk foreign key (status_id)
     references status_disp(status_id)
-) tablespace info_gym
-;
+) tablespace info_gym;
 
 -- 
 -- table: instructor 
@@ -254,6 +254,8 @@ create table instructor(
     ), 
     constraint ins_empleado_id_fk foreign key (empleado_id)
     references empleado(empleado_id),
+    constraint ins_suplente_id_fk foreign key (suplente_id)
+    references instructor(empleado_id),
     constraint ins_cedula_uk unique(cedula)
     using index (
         create unique index ins_cedula_iux on instructor(cedula)
@@ -370,7 +372,7 @@ tablespace info_gym_idx;
 create index hsd_status_fk_ix on historico_status_disp(status_id)
 tablespace info_gym_idx;
 
-create index hsd_inventario_fk_ix on historico_status_disp(inventario_id)
+create index hsd_inventario_fk_ix on historico_status_disp(dispositivo_id)
 tablespace info_gym_idx;
 
 -- -----------------------BLOB-------------------------------------
@@ -506,7 +508,7 @@ create table caloria(
 -- table: credencial 
 --
 create table credencial(
-    credencial_id    varchar2(40)     not null,
+    credencial_id    number(10, 0)     not null,
     folio            varchar2(8)      not null,
     fecha_inicio     date             not null,
     fecha_fin        date             not null,
