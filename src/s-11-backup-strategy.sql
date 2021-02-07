@@ -4,14 +4,16 @@
 -- @Descripción: Comandos para poder emplear la estrategia
 -- de respaldos definida (leer README)
 
---FULL BACKUP (CADA MES)
+
   configure channel device type disk
-  format '/unam-bda/backups/backup_%U.bkp' maxpiecesize 5G;
+  format '/unam-bda/fast-reco-area/backup_%U.bkp' maxpiecesize 5G;
 
   configure controlfile autobackup
-  format for device type disk to '/unam-bda/backups/ctl_file%F.bkp';
+  format for device type disk to '/unam-bda/fast-reco-area/ctl_file%F.bkp';
 
+--FULL BACKUP (CADA MES)
   backup database plus archivelog tag autos_full_inicial;
+
 --BACKUP INCREMENTAL NIVEL 0 CON ARCHIVE LOGS (CADA DOMINGO)
   backup as backupset incremental level 0 database plus archivelog tag
   autos_backup_nivel_0_1;
