@@ -8,8 +8,8 @@ connect sys/systemgym as sysdba
 whenever sqlerror exit rollback
 
 prompt Ajustando parametros para activar modo compartido...
-alter system set dispatchers='(dispatchers=6) (protocol=tcp)' scope=memory;
-alter system set shared_servers=60 scope=memory;
+alter system set dispatchers='(dispatchers=6) (protocol=tcp)' scope=both;
+alter system set shared_servers=60 scope=both;
 
 prompt Actualizando listener...
 alter system register;
