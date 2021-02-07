@@ -1,0 +1,12 @@
+run{
+# @Autor: Kennedy Villa Carolina
+#         Ramos Villaseñor Cesar Mauricio
+# @Fecha: 04/02/2021
+# @Descripción: Comandos para simular un complete
+# media recovery por medio del DRA
+   # restore and recover datafile
+      sql 'alter database datafile 5 offline';
+      restore ( datafile 5 );
+      recover datafile 5;
+      sql 'alter database datafile 5 online';
+}

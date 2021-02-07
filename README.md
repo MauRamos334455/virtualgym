@@ -76,7 +76,6 @@ backup as backupset incremental level 0 database plus archivelog tag autos_backu
 backup as backupset incremental level 1 cumulative database plus archivelog tag autos_backup_nivel_1_1;
 
 - Con base al valor de los tamaños de los backups, se calcula por medio de la
-
 fórmula el valor final. Teniendo así:
 
 605.43M Backup 0
@@ -94,9 +93,7 @@ fórmula el valor final. Teniendo así:
 31.5K Redo member semanal
 
 Tenemos un total de 1354M (incluyendo 10% extra) estimados para la FRA. 
-
 Con base a este valor más el almacenado de más archivos y que es más recomendable 
-
 no escatimar, decidimos establecer un valor de 2000M.
 
 ## Esquema de respaldos
@@ -112,8 +109,29 @@ para hacer recovery se consideraran estos dos backups así como todos los archiv
 generados entre el primer nivel 0 hasta el momento de recovery. De esta forma ,
 en un momento de recovery es mas probable contar con dos backups cero por si
 uno falla. Finalmente, se plantea hacer un full backup cada mes.
+- 5G Disponibles o 3G
 
 ## Complete Media Recovery
+- Se decidió eliminar el datafile: /u14/app/oracle/oradata/KERAPROY/users01.dbf
+
+### Manual
+- Ejecutar script s-12-complete-media-recovery.rman a través de RMAN
+
+### Automático
+- Ejecutar en RMAN:
+
+list failure
+
+advise failure
+
+- Leer script en:
+/u01/app/oracle/diag/rdbms/keraproy/keraproy/hm/reco_495320205.hm
+- Contenido generado del script (Ejemplo):
+     # restore and recover datafile
+      1    sql 'alter database datafile 5 offline';
+      2    restore ( datafile 5 );
+      3    recover datafile 5;
+      4    sql 'alter database datafile 5 online';
 
 
 

@@ -4,12 +4,12 @@
 -- @Descripción: Comandos para poder emplear la estrategia
 -- de respaldos definida (leer README)
 
-
+--BACKUPS EN FRA
   configure channel device type disk
-  format '/unam-bda/fast-reco-area/backup_%U.bkp' maxpiecesize 5G;
+  clear maxpiecesize 5G;
 
   configure controlfile autobackup
-  format for device type disk to '/unam-bda/fast-reco-area/ctl_file%F.bkp';
+  format for device type disk clear;
 
 --FULL BACKUP (CADA MES)
   backup database plus archivelog tag autos_full_inicial;

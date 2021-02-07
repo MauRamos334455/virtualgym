@@ -1,0 +1,30 @@
+
+run{
+# @Autor: Kennedy Villa Carolina
+#         Ramos Villaseñor Cesar Mauricio
+# @Fecha: 04/02/2021
+# @Descripción: Comandos para simular un complete
+# media recovery de forma manual. Se considera datafile 
+# /u14/app/oracle/oradata/KERAPROY/users01.dbf
+
+# ARCHIVO OFFLINE
+  alter database datafile '/u14/app/oracle/oradata/KERAPROY/users01.dbf' offline;
+
+# REINICIAR BASE EN MODO MOUNT
+  shutdown immediate;
+  startup mount;
+
+# RESTORE
+  restore datafile '/u14/app/oracle/oradata/KERAPROY/users01.dbf';
+
+# RECOVERY
+  recover datafile '/u14/app/oracle/oradata/KERAPROY/users01.dbf';
+
+# ABRIR BASE
+  alter database open;
+
+# ARCHIVO ONLINE
+  alter database datafile '/u14/app/oracle/oradata/KERAPROY/users01.dbf' online;
+
+}
+
