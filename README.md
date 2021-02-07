@@ -45,7 +45,7 @@ y entrar a sqlplus como sys e iniciar en nomount
 - Es necesario crear los siguientes directorios y permisos antes de ejecutar el script, como usuario root
      ###
       mkdir -p /unam-bda/archivelogs/KERAPROY/disk_a
-      mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b
+      mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b (CAMBIO POSTERIOR A LA FRA)
       chown -R oracle:oinstall /unam-bda/archivelogs
       chmod -R 750 /unam-bda/archivelogs
 
