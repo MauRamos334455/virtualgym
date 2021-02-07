@@ -17,54 +17,54 @@ y entrar a sqlplus como sys e iniciar en nomount
 - Ademas de ejecutar el script correspondiente, es necesario editar el archivo
 - TNSNAMES.ORA con los siguiente, donde XXX depende del host
 
-KERAPROY_DEDICATED =
- (DESCRIPTION =
-  (ADDRESS_LIST =
-   (ADDRESS = (PROTOCOL = TCP) (HOST = pc-XXX.fi.unam) (PORT = 1521))
-  )
-  (CONNECT_DATA =
-   (SERVICE_NAME = keraproy.fi.unam)
-   (SERVER=DEDICATED)
-  )
- )
+     # Conexiones para KERAPROY
+      KERAPROY_DEDICATED =
+        (DESCRIPTION =
+          (ADDRESS_LIST =
+            (ADDRESS = (PROTOCOL = TCP) (HOST = pc-crv.fi.unam) (PORT = 1521))
+          )
+          (CONNECT_DATA =
+            (SERVICE_NAME = keraproy.fi.unam)
+            (SERVER=DEDICATED)
+          )
+        )
+      
+       KERAPROY_SHARED =
+         (DESCRIPTION =
+           (ADDRESS_LIST =
+             (ADDRESS = (PROTOCOL = TCP) (HOST = pc-crv.fi.unam) (PORT = 1521))
+           )
+           (CONNECT_DATA =
+             (SERVICE_NAME = keraproy.fi.unam)
+             (SERVER=SHARED)
+           )
+         )
 
-KERAPROY_SHARED =
- (DESCRIPTION =
-  (ADDRESS_LIST =
-   (ADDRESS = (PROTOCOL = TCP) (HOST = pc-XXX.fi.unam) (PORT = 1521))
-  )
-  (CONNECT_DATA =
-   (SERVICE_NAME = keraproy.fi.unam)
-   (SERVER=SHARED)
-  )
- )
 
 ## Modo archive log
 - Es necesario crear los siguientes directorios y permisos antes de ejecutar el 
 - script, como usuario root
-
-mkdir -p /unam-bda/archivelogs/KERAPROY/disk_a
-mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b
-chown -R oracle:oinstall /unam-bda/archivelogs
-chmod -R 750 /unam-bda/archivelogs
+     mkdir -p /unam-bda/archivelogs/KERAPROY/disk_a
+     mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b
+     chown -R oracle:oinstall /unam-bda/archivelogs
+     chmod -R 750 /unam-bda/archivelogs
 
 ## Habilitar FRA
 - Nos conectamos a la BD target
-connect target "sys@keraproy as sysdba"
+     connect target "sys@keraproy as sysdba"
 
 - Configuramos la ruta del backup
-configure channel device type disk format '/unam-bda/backups/backup_%U.bkp' maxpiecesize 5G;
-
-configure controlfile autobackup format for device type disk to '/unam-bda/backups/ctl_file%F.bkp';
+     """sql
+     configure channel device type disk format '/unam-bda/backups/backup_%U.bkp' maxpiecesize 5G;
+     configure controlfile autobackup format for device type disk to '/unam-bda/backups/ctl_file%F.bkp';
+     """
 
 - Hacer Full Backup
-
-backup database plus archivelog tag autos_full_inicial;
+     backup database plus archivelog tag autos_full_inicial;
 
 - Eliminar archivos obsoletos
-
-report obsolete;
-delete obsolete;
+     report obsolete;
+     delete obsolete;
 
 - Simular carga diaria (sólo se estima)
 
@@ -76,21 +76,15 @@ backup as backupset incremental level 0 database plus archivelog tag autos_backu
 backup as backupset incremental level 1 cumulative database plus archivelog tag autos_backup_nivel_1_1;
 
 - Con base al valor de los tamaños de los backups, se calcula por medio de la
-fórmula el valor final. Teniendo así:
-
-605.43M Backup 0
-
-15M Incremental diferencial 1 (Estimación sobre 5M reales)
-
-587.5K Redo en días productivos
-
-4112.5K Redo semanales
-
-17.83M Control File
-
-1M Flashbacklogs
-
-31.5K Redo member semanal
+fórmula el valor final. 
+     # Valores de variables para FRA
+      605.43M Backup 0
+      15M Incremental diferencial 1 (Estimación sobre 5M reales)
+      587.5K Redo en días productivos
+      4112.5K Redo semanales
+      17.83M Control File
+      1M Flashbacklogs
+      31.5K Redo member semanal
 
 Tenemos un total de 1354M (incluyendo 10% extra) estimados para la FRA. 
 Con base a este valor más el almacenado de más archivos y que es más recomendable 
@@ -113,6 +107,8 @@ uno falla. Finalmente, se plantea hacer un full backup cada mes.
 
 ## Complete Media Recovery
 - Se decidió eliminar el datafile: /u14/app/oracle/oradata/KERAPROY/users01.dbf
+para el intento manual, y el data file: /u14/app/oracle/oradata/KERAPROY/info_gym01.dbf
+para el modo automático
 
 ### Manual
 - Ejecutar script s-12-complete-media-recovery.rman a través de RMAN
@@ -120,9 +116,8 @@ uno falla. Finalmente, se plantea hacer un full backup cada mes.
 ### Automático
 - Ejecutar en RMAN:
 
-list failure
-
-advise failure
+     1    list failure
+     2    advise failure
 
 - Leer script en:
 /u01/app/oracle/diag/rdbms/keraproy/keraproy/hm/reco_495320205.hm
