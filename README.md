@@ -42,8 +42,7 @@ y entrar a sqlplus como sys e iniciar en nomount
 
 
 ## Modo archive log
-- Es necesario crear los siguientes directorios y permisos antes de ejecutar el 
-- script, como usuario root
+- Es necesario crear los siguientes directorios y permisos antes de ejecutar el script, como usuario root
      ###
       mkdir -p /unam-bda/archivelogs/KERAPROY/disk_a
       mkdir -p /unam-bda/archivelogs/KERAPROY/disk_b
@@ -109,9 +108,10 @@ uno falla. Finalmente, se plantea hacer un full backup cada mes.
 - 5G Disponibles o 3G
 
 ## Complete Media Recovery
-- Se decidió eliminar el datafile: /u14/app/oracle/oradata/KERAPROY/users01.dbf
-para el intento manual, y el data file: /u14/app/oracle/oradata/KERAPROY/info_gym01.dbf
-para el modo automático
+- Se decidió eliminar los datafile: 
+     ###
+      /u14/app/oracle/oradata/KERAPROY/users01.dbf  (MODO MANUAL)
+      /u14/app/oracle/oradata/KERAPROY/info_gym01.dbf  (MODO DRA)
 
 ### Manual
 - Ejecutar script s-12-complete-media-recovery.rman a través de RMAN
